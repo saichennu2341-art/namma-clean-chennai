@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b5d3b">
+<title>Namma Clean Chennai | Smart Waste Management</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--green:#0b5d3b;--green2:#0f7a4d;--light:#f3f7f5;--card:#fff;--text:#173128;--muted:#6c7b75;--border:#e3ebe7;--orange:#e98a20;--red:#d83b45;--blue:#2878c8;--shadow:0 8px 28px rgba(15,45,34,.08)}
+body{font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--light);color:var(--text);min-height:100vh}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;border:0}
+.app{display:flex;min-height:100vh}
+.sidebar{width:250px;background:#083d29;color:#fff;position:fixed;left:0;top:0;bottom:0;padding:18px 14px;z-index:20;overflow:auto}
+.brand{display:flex;align-items:center;gap:11px;padding:8px 8px 20px;border-bottom:1px solid rgba(255,255,255,.12)}
+.logo{width:42px;height:42px;border-radius:12px;background:#fff;color:var(--green);display:grid;place-items:center;font-size:22px;font-weight:900}
+.brand b{font-size:15px}.brand small{display:block;color:#a9cabc;font-size:11px;margin-top:2px}
+.nav{margin-top:18px}.nav button{width:100%;background:transparent;color:#c8ddd5;text-align:left;padding:12px 13px;border-radius:10px;margin:3px 0;font-size:13px}
+.nav button:hover,.nav button.active{background:#126244;color:#fff}
+.nav span{margin-right:9px}
+.side-footer{position:absolute;left:14px;right:14px;bottom:14px;background:rgba(255,255,255,.08);padding:12px;border-radius:10px;font-size:11px;color:#b8d0c6}
+.main{margin-left:250px;width:calc(100% - 250px)}
+.top{height:70px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:10}
+.title h1{font-size:20px}.title p{font-size:11px;color:var(--muted);margin-top:3px}
+.top-actions{display:flex;align-items:center;gap:10px}.pill{padding:8px 11px;border:1px solid var(--border);border-radius:9px;background:#fff;font-size:12px}.admin{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700}.avatar{width:32px;height:32px;border-radius:50%;background:#dcefe6;display:grid;place-items:center;color:var(--green)}
+.content{padding:24px;max-width:1500px;margin:auto}
+.page{display:none}.page.active{display:block}
+.hero{background:linear-gradient(135deg,#0b5d3b,#15915d);color:#fff;border-radius:16px;padding:24px;display:flex;justify-content:space-between;gap:20px;align-items:center;box-shadow:var(--shadow)}
+.hero h2{font-size:25px;margin-bottom:7px}.hero p{font-size:13px;color:#d9f1e6;max-width:700px;line-height:1.55}
+.hero-actions{display:flex;gap:9px;flex-wrap:wrap}.btn{padding:10px 14px;border-radius:9px;font-weight:700;font-size:12px;background:#fff;color:var(--green)}.btn.green{background:#0d6d46;color:#fff;border:1px solid rgba(255,255,255,.25)}.btn.outline{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.45)}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:18px 0}
+.stat{background:#fff;border:1px solid var(--border);border-radius:13px;padding:17px;box-shadow:var(--shadow)}
+.stat-top{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}.stat strong{display:block;font-size:27px;margin:9px 0 5px}.up{color:#1b8a55;font-size:11px}.down{color:#c74d4d;font-size:11px}
+.card{background:#fff;border:1px solid var(--border);border-radius:13px;padding:18px;box-shadow:var(--shadow)}
+.row2{display:grid;grid-template-columns:1.25fr .75fr;gap:15px}.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.card-head h3{font-size:15px}.muted{color:var(--muted);font-size:11px}
+.bar-chart{height:220px;display:flex;align-items:end;gap:14px;padding:12px 5px 5px;border-bottom:1px solid var(--border)}
+.bar-wrap{height:100%;flex:1;display:flex;align-items:end;justify-content:center;position:relative}.bar{width:65%;min-height:8px;border-radius:6px 6px 0 0;background:linear-gradient(#20a86d,#0b5d3b)}.bar-label{position:absolute;bottom:-21px;font-size:10px;color:var(--muted)}
+.legend{display:flex;gap:16px;font-size:10px;color:var(--muted);margin-top:14px}
+.legend i{width:9px;height:9px;display:inline-block;border-radius:2px;background:#0b5d3b;margin-right:4px}.legend i.orange{background:#e98a20}.legend i.red{background:#d83b45}
+.donut{width:170px;height:170px;border-radius:50%;background:conic-gradient(#0b5d3b 0 72%,#e98a20 72% 91%,#d83b45 91% 100%);display:grid;place-items:center;margin:4px auto 15px}.donut:after{content:"92%";width:105px;height:105px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:25px;font-weight:800}
+.kpi-list{display:grid;gap:9px}.kpi{display:flex;justify-content:space-between;font-size:12px;padding:9px 0;border-bottom:1px solid #edf1ef}.kpi:last-child{border:0}
+.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:760px}.table th,.table td{text-align:left;padding:11px;border-bottom:1px solid #edf1ef;font-size:11px}.table th{color:var(--muted);font-weight:700;background:#fafcfb}.status{padding:5px 8px;border-radius:20px;font-size:10px;font-weight:700;display:inline-block}.ok{background:#e4f6ec;color:#177044}.warn{background:#fff1dd;color:#a35c0b}.danger{background:#fde5e7;color:#a72d37}
+.progress{height:7px;background:#e9efec;border-radius:20px;overflow:hidden}.progress i{display:block;height:100%;background:#0b5d3b;border-radius:20px}
+.map{height:390px;border-radius:12px;background:#dcebe3;position:relative;overflow:hidden;border:1px solid var(--border)}
+.map:before,.map:after{content:"";position:absolute;background:#fff;opacity:.8;transform:rotate(22deg);width:140%;height:18px;left:-20%;top:42%}.map:after{transform:rotate(-31deg);top:62%;height:11px}
+.map-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.55) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.55) 1px,transparent 1px);background-size:55px 55px}
+.map-title{position:absolute;top:14px;left:14px;background:#fff;padding:9px 12px;border-radius:9px;font-size:11px;font-weight:800;box-shadow:var(--shadow);z-index:2}
+.marker{position:absolute;width:16px;height:16px;border-radius:50%;background:#0b5d3b;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.25);z-index:3}.marker.red{background:#d83b45}.marker.orange{background:#e98a20}.marker span{display:none;position:absolute;left:20px;top:-8px;background:#173128;color:#fff;padding:5px 7px;border-radius:6px;white-space:nowrap;font-size:9px}.marker:hover span{display:block}
+.location-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.location{border:1px solid var(--border);padding:13px;border-radius:11px;background:#fbfdfc}.location h4{font-size:13px;margin-bottom:5px}.location p{font-size:10px;color:var(--muted);margin-bottom:10px}.location .btn2{padding:7px 9px;border-radius:7px;background:#e6f3ed;color:#0b5d3b;font-size:10px;font-weight:800}
+.bin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.bin{border:1px solid var(--border);border-radius:12px;padding:14px;background:#fff}.bin h4{font-size:13px}.bin small{color:var(--muted);font-size:10px}.bin-line{display:flex;justify-content:space-between;margin:13px 0 7px;font-size:10px}.bin .progress i{background:#15915d}.bin .progress i.high{background:#e98a20}.bin .progress i.full{background:#d83b45}
+.complaint{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:10px;font-weight:800;color:#4e625a}.field input,.field select,.field textarea{border:1px solid var(--border);border-radius:8px;padding:10px;outline:none;background:#fff;font-size:12px}.field textarea{min-height:95px;resize:vertical}.submit{background:#0b5d3b;color:#fff;padding:10px 15px;border-radius:8px;font-weight:800;font-size:12px}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:50;align-items:center;justify-content:center;padding:15px}.modal-bg.show{display:flex}.modal{background:#fff;width:min(520px,100%);border-radius:14px;padding:20px}.modal-head{display:flex;justify-content:space-between;margin-bottom:15px}.close{background:#f1f4f2;border-radius:7px;padding:6px 10px}
+.toast{position:fixed;right:18px;bottom:18px;background:#173128;color:#fff;padding:12px 15px;border-radius:9px;font-size:12px;box-shadow:var(--shadow);opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s;z-index:100}.toast.show{opacity:1;transform:none}
+.mobile-menu{display:none;background:#0b5d3b;color:#fff;border-radius:8px;padding:8px 10px}
+@media(max-width:1050px){.grid4{grid-template-columns:repeat(2,1fr)}.row2{grid-template-columns:1fr}.bin-grid,.location-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.sidebar{transform:translateX(-100%);transition:.2s}.sidebar.open{transform:none}.main{margin-left:0;width:100%}.mobile-menu{display:block}.top{padding:0 14px}.top .pill{display:none}.content{padding:14px}.hero{flex-direction:column;align-items:flex-start}.grid4,.row3,.bin-grid,.location-grid{grid-template-columns:1fr}.complaint{grid-template-columns:1fr}.top-actions{gap:5px}.title h1{font-size:16px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><div class="logo">♻</div><div><b>Namma Clean Chennai</b><small>Smart Waste Management</small></div></div>
+  <nav class="nav">
+    <button class="active" data-page="dashboard"><span>▦</span>Dashboard</button>
+    <button data-page="bins"><span>♻</span>Smart Bins</button>
+    <button data-page="routes"><span>🚛</span>Collection & Routes</button>
+    <button data-page="map"><span>📍</span>Live Bin Map</button>
+    <button data-page="complaints"><span>⚠</span>Citizen Complaints</button>
+    <button data-page="recycling"><span>🔄</span>Recycling Centers</button>
+    <button data-page="analytics"><span>▥</span>Analytics & Reports</button>
+    <button data-page="staff"><span>👥</span>Users & Staff</button>
+    <button data-page="settings"><span>⚙</span>Settings</button>
+  </nav>
+  <div class="side-footer">Prototype for college project<br>Greater Chennai Corporation style UI</div>
+</aside>
+
+<main class="main">
+<header class="top">
+  <div style="display:flex;align-items:center;gap:10px">
+    <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+    <div class="title"><h1 id="pageTitle">Dashboard</h1><p>Greater Chennai Corporation • Tamil Nadu</p></div>
+  </div>
+  <div class="top-actions"><button class="pill" onclick="toast('All systems operational')">● System Online</button><div class="admin"><div class="avatar">A</div>Admin</div></div>
+</header>
+
+<section class="content">
+<div class="page active" id="dashboard">
+  <div class="hero"><div><h2>Namma Clean Chennai</h2><p>Smart waste monitoring prototype for Chennai. Track bin levels, collection routes, citizen complaints and recycling facilities from one dashboard.</p></div><div class="hero-actions"><button class="btn" onclick="go('bins')">View smart bins</button><button class="btn outline" onclick="go('map')">Open map</button></div></div>
+  <div class="grid4">
+    <div class="stat"><div class="stat-top">Smart bins <b>♻</b></div><strong>1,250</strong><span class="up">↑ 8.4% this month</span></div>
+    <div class="stat"><div class="stat-top">Collected today <b>⚖</b></div><strong>8.6 t</strong><span class="up">↑ 4.2% vs yesterday</span></div>
+    <div class="stat"><div class="stat-top">Pending pickups <b>🚛</b></div><strong>47</strong><span class="down">↓ 12% from yesterday</span></div>
+    <div class="stat"><div class="stat-top">Overflowing bins <b>⚠</b></div><strong>12</strong><span class="down">Needs attention</span></div>
+  </div>
+  <div class="row2">
+    <div class="card"><div class="card-head"><h3>Waste collected — last 7 days</h3><span class="muted">tonnes</span></div><div class="bar-chart" id="chart"></div><div class="legend"><span><i></i>Collected</span><span><i class="orange"></i>Recyclable</span></div></div>
+    <div class="card"><div class="card-head"><h3>Collection efficiency</h3><span class="muted">today</span></div><div class="donut"></div><div class="kpi-list"><div class="kpi"><span>On-time routes</span><b>92%</b></div><div class="kpi"><span>Completed</span><b>138 / 150</b></div><div class="kpi"><span>Delayed</span><b>12</b></div></div></div>
+  </div>
+  <div class="row3" style="margin-top:15px">
+    <div class="card"><div class="card-head"><h3>Zone status</h3><span class="muted">live prototype</span></div><div class="kpi-list"><div class="kpi"><span>Zone 1 — Thiruvottiyur</span><b class="up">Good</b></div><div class="kpi"><span>Zone 5 — Royapuram</span><b class="up">Good</b></div><div class="kpi"><span>Zone 9 — Teynampet</span><b class="warn">Attention</b></div><div class="kpi"><span>Zone 13 — Adyar</span><b class="up">Good</b></div></div></div>
+    <div class="card"><div class="card-head"><h3>Priority bins</h3><span class="muted">12 alerts</span></div><div class="kpi-list"><div class="kpi"><span>Guindy Industrial Estate</span><b class="danger">98%</b></div><div class="kpi"><span>Velachery Bus Stand</span><b class="warn">88%</b></div><div class="kpi"><span>Perungudi</span><b class="warn">84%</b></div><div class="kpi"><span>T. Nagar</span><b class="warn">81%</b></div></div></div>
+    <div class="card"><div class="card-head"><h3>Quick actions</h3></div><div style="display:grid;gap:9px"><button class="btn" style="background:#e8f4ee;text-align:left" onclick="openModal()">＋ Add Smart Bin</button><button class="btn" style="background:#e8f4ee;text-align:left" onclick="go('complaints')">⚠ New Complaint</button><button class="btn" style="background:#e8f4ee;text-align:left" onclick="downloadReport()">↓ Download Report</button></div></div>
+  </div>
+</div>
+
+<div class="page" id="bins"><div class="card-head"><h3>Smart Bin Monitoring</h3><button class="submit" onclick="openModal()">＋ Add Smart Bin</button></div><div class="bin-grid" id="binGrid"></div></div>
+
+<div class="page" id="routes"><div class="row2"><div class="card"><div class="card-head"><h3>Today's Collection Routes</h3><span class="muted">5 Oct 2026</span></div><div class="table-wrap"><table class="table"><thead><tr><th>Route</th><th>Area</th><th>Vehicle</th><th>Driver</th><th>Status</th></tr></thead><tbody><tr><td>R-01</td><td>Ramapuram → Guindy</td><td>TN 09 AB 1024</td><td>Ramesh</td><td><span class="status ok">Completed</span></td></tr><tr><td>R-02</td><td>Adyar → Besant Nagar</td><td>TN 09 CD 2451</td><td>Kumar</td><td><span class="status ok">On Route</span></td></tr><tr><td>R-03</td><td>Velachery → Pallikaranai</td><td>TN 10 EF 7720</td><td>Arun</td><td><span class="status warn">Delayed</span></td></tr><tr><td>R-04</td><td>Anna Nagar → Ambattur</td><td>TN 12 GH 4502</td><td>Selvam</td><td><span class="status ok">On Route</span></td></tr></tbody></table></div></div><div class="card"><div class="card-head"><h3>Route performance</h3></div><div class="kpi-list"><div class="kpi"><span>Routes planned</span><b>150</b></div><div class="kpi"><span>Completed</span><b>138</b></div><div class="kpi"><span>Delayed</span><b>12</b></div><div class="kpi"><span>Efficiency</span><b>92%</b></div></div></div></div></div>
+
+<div class="page" id="map"><div class="card"><div class="card-head"><h3>Live Bin Map — Chennai</h3><button class="submit" onclick="openDirections('Greater Chennai Corporation Ripon Building')">📍 GCC directions</button></div><div class="map" id="bigMap"><div class="map-grid"></div><div class="map-title">Chennai • 36 monitored locations</div></div><p class="muted" style="margin-top:10px">Map markers are prototype locations. Green = normal, orange = attention, red = urgent. Click a marker for the location name.</p></div></div>
+
+<div class="page" id="complaints"><div class="row2"><div class="card"><div class="card-head"><h3>Citizen Complaint</h3><span class="muted">Demo submission</span></div><form class="complaint" onsubmit="submitComplaint(event)"><div class="field"><label>Citizen name</label><input required placeholder="Enter name"></div><div class="field"><label>Mobile number</label><input required type="tel" placeholder="10-digit number"></div><div class="field"><label>Location</label><select id="complaintLocation"><option>Ramapuram</option><option>Guindy</option><option>Velachery</option><option>Adyar</option><option>Perungudi</option><option>Anna Nagar</option><option>Ambattur</option><option>T. Nagar</option><option>Porur</option></select></div><div class="field"><label>Complaint type</label><select><option>Overflowing bin</option><option>Missed collection</option><option>Illegal dumping</option><option>Roadside waste</option></select></div><div class="field full"><label>Description</label><textarea required placeholder="Describe the issue..."></textarea></div><div class="field full"><button class="submit">Submit Complaint</button></div></form></div><div class="card"><div class="card-head"><h3>Recent complaints</h3><span class="muted">today</span></div><div class="kpi-list"><div class="kpi"><span>Overflowing bin — Ramapuram</span><b class="warn">Open</b></div><div class="kpi"><span>Missed pickup — Velachery</span><b class="up">Assigned</b></div><div class="kpi"><span>Roadside waste — Porur</span><b class="danger">Urgent</b></div><div class="kpi"><span>Illegal dumping — Guindy</span><b class="up">Resolved</b></div></div></div></div></div>
+
+<div class="page" id="recycling"><div class="card-head"><h3>Recycling & Recovery Centers</h3><span class="muted">Chennai prototype directory</span></div><div class="location-grid" id="recyclingGrid"></div></div>
+
+<div class="page" id="analytics"><div class="row3"><div class="card"><div class="card-head"><h3>Waste collected</h3></div><strong style="font-size:28px">8.6 t</strong><p class="muted">Today</p><div class="progress" style="margin-top:15px"><i style="width:76%"></i></div></div><div class="card"><div class="card-head"><h3>Recycled waste</h3></div><strong style="font-size:28px">3.2 t</strong><p class="muted">37% of collected waste</p><div class="progress" style="margin-top:15px"><i style="width:37%"></i></div></div><div class="card"><div class="card-head"><h3>Collection efficiency</h3></div><strong style="font-size:28px">92%</strong><p class="muted">12 delayed routes</p><div class="progress" style="margin-top:15px"><i style="width:92%"></i></div></div></div><div class="card" style="margin-top:15px"><div class="card-head"><h3>Weekly summary</h3><button class="submit" onclick="downloadReport()">↓ Download</button></div><div class="table-wrap"><table class="table"><thead><tr><th>Metric</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr></thead><tbody><tr><td>Collected (t)</td><td>7.8</td><td>8.1</td><td>8.4</td><td>8.0</td><td>8.8</td><td>9.0</td><td>8.6</td></tr><tr><td>Recycled (t)</td><td>2.7</td><td>2.9</td><td>3.0</td><td>2.8</td><td>3.3</td><td>3.5</td><td>3.2</td></tr></tbody></table></div></div></div>
+
+<div class="page" id="staff"><div class="card"><div class="card-head"><h3>Users & Collection Staff</h3><button class="submit" onclick="toast('Demo: staff invite created')">＋ Add User</button></div><div class="table-wrap"><table class="table"><thead><tr><th>Name</th><th>Role</th><th>Zone</th><th>Phone</th><th>Status</th></tr></thead><tbody><tr><td>Ramesh Kumar</td><td>Driver</td><td>Zone 13</td><td>9XXXXXX214</td><td><span class="status ok">Active</span></td></tr><tr><td>Arun Prakash</td><td>Supervisor</td><td>Zone 9</td><td>9XXXXXX771</td><td><span class="status ok">Active</span></td></tr><tr><td>Selvam</td><td>Driver</td><td>Zone 8</td><td>9XXXXXX532</td><td><span class="status warn">On Leave</span></td></tr></tbody></table></div></div></div>
+
+<div class="page" id="settings"><div class="row2"><div class="card"><div class="card-head"><h3>System Settings</h3></div><div class="kpi-list"><div class="kpi"><span>Notifications</span><button class="submit" onclick="toast('Notifications toggled')">Enabled</button></div><div class="kpi"><span>Auto refresh</span><button class="submit" onclick="toast('Auto refresh: 5 minutes')">5 min</button></div><div class="kpi"><span>Language</span><b>English</b></div><div class="kpi"><span>Project region</span><b>Chennai, Tamil Nadu</b></div></div></div><div class="card"><div class="card-head"><h3>Prototype information</h3></div><p style="font-size:12px;line-height:1.7;color:var(--muted)">This website is a college-project prototype. Smart-bin readings, route numbers, statistics and some center listings are demonstration data and are not live GCC telemetry.</p></div></div></div>
+</section>
+</main>
+</div>
+
+<div class="modal-bg" id="modalBg"><div class="modal"><div class="modal-head"><h3>Add Smart Bin</h3><button class="close" onclick="closeModal()">✕</button></div><form class="complaint" onsubmit="addBin(event)"><div class="field"><label>Location</label><input id="newLocation" required placeholder="e.g. Saidapet"></div><div class="field"><label>Fill level %</label><input id="newFill" required type="number" min="0" max="100" value="20"></div><div class="field full"><button class="submit">Add Bin</button></div></form></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const bins = [
+["Ramapuram",62],["Guindy",98],["Adyar",54],["Velachery",88],["T. Nagar",81],["Mylapore",43],
+["Anna Nagar",67],["Ambattur",76],["Porur",72],["Kodambakkam",58],["Nungambakkam",69],["Saidapet",47],
+["Thiruvanmiyur",64],["Besant Nagar",39],["Sholinganallur",71],["Pallikaranai",83],["Perungudi",84],
+["Madipakkam",52],["Chromepet",61],["Tambaram",73],["Mogappair",56],["Purasawalkam",78],["Royapettah",49],
+["Koyambedu",91],["Kilpauk",63],["Egmore",45],["Triplicane",74],["Royapuram",87],["Tondiarpet",68],
+["Perambur",59],["Vyasarpadi",79],["Thiruvottriyur",66],["Madhuravoyal",53],["Mambakkam",48],
+["Medavakkam",70],["Nanganallur",57]
+];
+const centers = [
+["Guindy Material Recovery Center","Guindy","Dry waste / material recovery"],
+["Perungudi Recycling Center","Perungudi","Segregation and recovery"],
+["Kodungaiyur Recovery Center","Kodungaiyur","Municipal waste recovery"],
+["Sree E-Waste Recycling","Velachery","Electronic waste recycling"],
+["SKV E-Waste Recycling","Ambattur","E-waste recycling"],
+["Earth Recycler","Vepery / Park Town","Recyclable material collection"]
+];
+
+function toast(msg){
+  const el=document.getElementById("toast"); el.textContent=msg; el.classList.add("show");
+  clearTimeout(window._toast); window._toast=setTimeout(()=>el.classList.remove("show"),2200);
+}
+function toggleSidebar(){document.getElementById("sidebar").classList.toggle("open")}
+function go(page){
+  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+  document.getElementById(page).classList.add("active");
+  document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===page));
+  document.getElementById("pageTitle").textContent=document.querySelector('.nav button[data-page="'+page+'"]').textContent.trim();
+  if(page==="map") renderMap();
+  if(window.innerWidth<760) document.getElementById("sidebar").classList.remove("open");
+}
+document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+
+function renderBins(){
+  document.getElementById("binGrid").innerHTML=bins.map((b,i)=>{
+    const cls=b[1]>=95?"full":b[1]>=80?"high":"";
+    const status=b[1]>=95?"Urgent":b[1]>=80?"Attention":"Normal";
+    const sc=b[1]>=95?"danger":b[1]>=80?"warn":"ok";
+    return '<div class="bin"><div style="display:flex;justify-content:space-between"><div><h4>'+b[0]+'</h4><small>BIN-'+String(i+101).padStart(3,"0")+' • Chennai</small></div><span class="status '+sc+'">'+status+'</span></div><div class="bin-line"><span>Fill level</span><b>'+b[1]+'%</b></div><div class="progress"><i class="'+cls+'" style="width:'+b[1]+'%"></i></div><div style="display:flex;justify-content:flex-end;margin-top:10px"><button class="btn2" onclick="openDirections(\''+b[0]+' Chennai Tamil Nadu\')">📍 Directions</button></div></div>';
+  }).join("");
+}
+function renderMap(){
+  const map=document.getElementById("bigMap");
+  map.querySelectorAll(".marker").forEach(x=>x.remove());
+  bins.forEach((b,i)=>{
+    const x=8+(i*37)%84, y=18+(i*53)%70;
+    const cls=b[1]>=95?"red":b[1]>=80?"orange":"";
+    const m=document.createElement("button"); m.className="marker "+cls; m.style.left=x+"%"; m.style.top=y+"%";
+    m.innerHTML="<span>"+b[0]+" • "+b[1]+"%</span>";
+    m.onclick=()=>toast(b[0]+" bin fill level: "+b[1]+"%");
+    map.appendChild(m);
+  });
+}
+function renderChart(){
+  const vals=[7.8,8.1,8.4,8.0,8.8,9.0,8.6], days=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  document.getElementById("chart").innerHTML=vals.map((v,i)=>'<div class="bar-wrap"><div class="bar" style="height:'+((v/9)*82)+'%"></div><div class="bar-label">'+days[i]+'</div></div>').join("");
+}
+function renderCenters(){
+  document.getElementById("recyclingGrid").innerHTML=centers.map(c=>'<div class="location"><h4>'+c[0]+'</h4><p>📍 '+c[1]+'<br>'+c[2]+'</p><button class="btn2" onclick="openDirections(\''+c[0]+' '+c[1]+' Chennai Tamil Nadu\')">📍 Get directions</button></div>').join("");
+}
+function openDirections(place){
+  window.open("https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(place),"directions");
+}
+function openModal(){document.getElementById("modalBg").classList.add("show")}
+function closeModal(){document.getElementById("modalBg").classList.remove("show")}
+function addBin(e){
+  e.preventDefault();
+  const loc=document.getElementById("newLocation").value.trim();
+  const fill=Math.max(0,Math.min(100,Number(document.getElementById("newFill").value)));
+  if(!loc){return}
+  bins.unshift([loc,fill]); renderBins(); closeModal(); e.target.reset(); toast("Smart bin added: "+loc);
+}
+function submitComplaint(e){
+  e.preventDefault();
+  const id="CHN-"+Math.floor(10000+Math.random()*89999);
+  e.target.reset(); toast("Complaint "+id+" submitted successfully");
+}
+function downloadReport(){
+  const text=[
+    "NAMMA CLEAN CHENNAI",
+    "Smart Waste Management Prototype Report",
+    "Date: 5 October 2026",
+    "",
+    "Smart bins: 1,250",
+    "Waste collected today: 8.6 tonnes",
+    "Recycled waste: 3.2 tonnes",
+    "Pending pickups: 47",
+    "Overflowing bins: 12",
+    "Collection efficiency: 92%",
+    "",
+    "Note: This is demonstration data for a college project."
+  ].join("\n");
+  const blob=new Blob([text],{type:"text/plain;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a"); a.href=url; a.download="namma-clean-chennai-report.txt"; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000); toast("Report downloaded");
+}
+renderBins(); renderChart(); renderCenters(); renderMap();
+</script>
+</body>
+</html>
